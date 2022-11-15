@@ -1,8 +1,10 @@
 let inputTareas = document.querySelector('#inputTareas');
 let contadorTotal = document.querySelector('#cantTareasTotal');
 let contadorRealizadas = document.querySelector('#cantTareasRealizadas');
+let idCheckbox = document.querySelector('#idCheckbox')
 let contadorId = 0;
 let totalTareas = 0;
+let contadorTareasRealizadas = 0;
 let tareas = [];
 
 let btnAgregar = document.querySelector('#btnAgregar')
@@ -10,8 +12,9 @@ btnAgregar.addEventListener("click", function(){
 //preguntar si inputTareas no esta vacio != ''
 //Para que no agregue espacios vacios
 //Condicion simple
-
   const nuevaTarea = inputTareas.value;
+  if (nuevaTarea != "") {
+  
     tareas.push({id: contadorId, nombre: nuevaTarea, completado: false});
     inputTareas.value = "";
     contadorId++;
@@ -19,7 +22,13 @@ btnAgregar.addEventListener("click", function(){
     console.log(nuevaTarea);
     console.log(tareas);
     agregarTarea(tareas)
-});
+} 
+else 
+{
+  alert('Ingresa una tarea')
+}
+}
+);
 
 //Agregar Tarea
 let agregarTarea = function(tareasAux) {
@@ -41,35 +50,32 @@ let agregarTarea = function(tareasAux) {
       listaFinal.innerHTML = idTareasHtml
       tareasTotales = tareas.length
       contadorTotal.innerHTML = tareasTotales 
+      contadorRealizadas.innerHTML = contadorTareasRealizadas
   }
  //Cambiar tarea Realizada
 
 //Tachar o marcar la tarea ya realizada
 let tareaHecha = function(idTareaHecha){
-  contadorRealizadas.innerHTML = 0;
+  // contadorRealizadas.innerHTML = 0;
+
+let indexTareaHecha = tareas.findIndex((elemento) => elemento.id === idTareaHecha)
 let idCheckbox = document.querySelector('#idCheckbox')
 if (idCheckbox.checked == true){
   console.log('Checkbox activado')
-    // let indexTareaHecha = tareas.findIndex((elemento) => elemento.id == idTareaHecha)
-    // if (indexTareaHecha >=0){
-    //   contadorRealizadas.innerHTML ++;
-    //   elemento.completado = true
-    //   console.log(elemento.completado)
-    // }
+  console.log(indexTareaHecha)
 } else {
-  console.log('Checkbox desactivado')
-  // if (contadorRealizadas < 0)
-  // contadorRealizadas.innerHTML = 0;
+        console.log('Checkbox desactivado')
+        console.log(indexTareaHecha)
+    }}
+    
+  
 
-}
-
-};
 
 //Borrar una tarea que ya no se quiere
 let borrarTarea = function(idTareaBorrar){
     let idBorrarTarea = tareas.findIndex((elemento) => elemento.id == idTareaBorrar)
     if (idBorrarTarea >=0){
-      tareas.slice(idBorrarTarea,1)
-      agregarTarea()
+      tareas.splice(idBorrarTarea,1)
+      agregarTarea(tareas)
     }
   };
